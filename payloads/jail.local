@@ -1,0 +1,31 @@
+[DEFAULT]
+# Ban clients with failed auth for one hour:
+bantime = 3600
+# Override /etc/fail2ban/jail.d/00-firewalld.conf:
+banaction = iptables-multiport
+[sshd]
+enabled = true
+
+# Multi Ban
+# 3 ban in 1 hour > Ban for 1 hour
+[multi-ban]
+
+enabled = true
+filter = ban
+logpath = /var/log/fail2ban.log
+maxretry = 3
+findtime = 3600
+banaction = iptables-multiport
+bantime = 86400
+
+# Multi Ban 2
+# 3 multi-ban in 4 hours > Ban for 24h
+[multi-ban2]
+
+enabled = true
+filter = multiban
+logpath = /var/log/fail2ban.log
+maxretry = 3
+findtime = 14400
+banaction = iptables-multiport
+bantime = 186400
